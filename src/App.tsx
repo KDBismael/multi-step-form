@@ -1,9 +1,11 @@
 import './App.css';
+import { FormPage } from './pages/form-page';
+
 
 function App() {
   return (
-    <div className="App">
-      <h1 className='font-sans font-bold text-center'>App page</h1>
+    <div className="App w-screen h-screen">
+      <FormPage/>
     </div>
   );
 }
