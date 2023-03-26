@@ -52,7 +52,7 @@ export const FormPage=()=>{
 
     return(
         <formContext.Provider value={value}>
-            <div className="w-full h-full bg-magnolia">
+            <div className="w-full h-full bg-magnolia grid place-content-center">
                 <FormLayout>
                     {step===step1? <Info/>:step===step2?<Plan/>:step===step3?<AddOns/>:step===step4?<Summary/>:step===step5?<Confirm/>:''}
                 </FormLayout>

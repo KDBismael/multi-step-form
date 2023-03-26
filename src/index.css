@@ -8,3 +8,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.bg-sidebar{
+  background-image: url('../public/images/bg-sidebar-desktop.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

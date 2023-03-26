@@ -15,6 +15,7 @@ module.exports = {
       'light-gray': 'hsl(229, 24%, 87%)',
       'magnolia': 'hsl(217, 100%, 97%)',
       'alabaster': 'hsl(231, 100%, 99%)',
+      'white':'#ffffff',
     },
     fontFamily:{
       sans: ['Ubuntu', 'sans-serif']
