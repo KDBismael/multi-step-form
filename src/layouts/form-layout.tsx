@@ -11,7 +11,7 @@ export const FormLayout=({children}:Props)=>{
     const {back,next,step}=useFormContext();
 
     return(
-        <div className="font-sans bg-white flex flex-column">
+        <div className="font-sans bg-white flex flex-column rounded-xl">
             <Navigation/>
             <div className="wrapper px-16 pt-10 pb-8">
                 <div className="content">
