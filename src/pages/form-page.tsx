@@ -4,23 +4,34 @@ import { Info } from "../components/info";
 import { Plan } from "../components/plan";
 import { Summary } from "../components/summary";
 import { FormLayout } from "../layouts/form-layout";
-import {step1,step2,step3,step4,step5} from "../helpers/helpers";
+import {step1,step2,step3,step4,step5,plan1, time1, time2} from "../helpers/helpers";
 import { Confirm } from "../components/confirm";
 
 interface Context{
     step:string;
     back:()=>void;
     next:()=>void;
+    plan:string;
+    timeFrame:string;
+    handlePlanClick:(name:string)=>void;
+    handleTimeFrameClick:()=>void;
 }
 
 const formContext=createContext<Context>({
     step:step1,
     back:()=>{},
     next:()=>{},
+    plan:plan1,
+    timeFrame:time1,
+    handlePlanClick:(name:string)=>{},
+    handleTimeFrameClick:()=>{},
 });
 
 export const FormPage=()=>{
     const [step,setStep]=useState<string>(step1);
+    const [plan,setPlan]=useState<string>(plan1);
+    const [timeFrame,setTimeFrame]=useState<string>(time1);
+
     const back=()=>{
         switch(step){
             case step4:
@@ -47,8 +58,24 @@ export const FormPage=()=>{
                 return;
         }
     }
+    const handlePlanClick=(name:string) => {
+        setPlan(name);
+        /**UseState reactivity rerender the dom that make easier to change the style based on that */
+    };
+    const handleTimeFrameClick=()=>{
+        switch(timeFrame){
+            case time1:
+                setTimeFrame(time2);
+                break;
+            case (time2):
+                setTimeFrame(time1);
+                break;
+            default:
+                setTimeFrame(time1);
+        }
+    }
 
-    const value={step,back,next}
+    const value={step,back,next,plan,timeFrame,handlePlanClick,handleTimeFrameClick}
 
     return(
         <formContext.Provider value={value}>
