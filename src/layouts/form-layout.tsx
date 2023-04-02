@@ -14,13 +14,13 @@ export const FormLayout=({children}:Props)=>{
         <div className="font-sans bg-white flex flex-column rounded-xl">
             <Navigation/>
             <div className="wrapper px-16 pt-10 pb-8">
-                <div className="content">
+                <div className="content h-[315px]">
                     {children}
                 </div>
-                {step!==step5 && <div className="buttons flex justify-between mt-16">
+                <div className={step!==step5?'buttons flex justify-between mt-16':'buttons flex justify-between mt-16 invisible'}>
                     <button onClick={back} className={step===step1? 'invisible': ''}>Go Back</button>
                     <button onClick={next} className="next font-normal text-white rounded-md bg-marine-blue border-0 py-2 px-3">{step===step4?<span>Confirm</span>:<span>Next Step</span>}</button>
-                </div>}
+                </div>
             </div>
         </div>
     )
