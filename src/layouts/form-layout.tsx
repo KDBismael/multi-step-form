@@ -18,8 +18,8 @@ export const FormLayout=({children}:Props)=>{
                     {children}
                 </div>
                 <div className={step!==step5?'buttons flex justify-between mt-16':'buttons flex justify-between mt-16 invisible'}>
-                    <button onClick={back} className={step===step1? 'invisible': ''}>Go Back</button>
-                    <button onClick={next} className="next font-normal text-white rounded-md bg-marine-blue border-0 py-2 px-3">{step===step4?<span>Confirm</span>:<span>Next Step</span>}</button>
+                    <button onClick={back} className={step===step1? 'invisible': 'font-medium text-cool-gray hover:text-marine-blue transition-color duration-300'}>Go Back</button>
+                    <button onClick={next} className={step===step4?'next font-normal text-white rounded-md bg-purplish-blue hover:bg-pastel-blue w-28 border-0 py-2 px-3 transition-color duration-300':'next font-normal text-white rounded-md w-28 bg-marine-blue hover:bg-marine-blue-light border-0 py-2 px-3 transition-color duration-300'}>{step===step4?<span>Confirm</span>:<span>Next Step</span>}</button>
                 </div>
             </div>
         </div>
