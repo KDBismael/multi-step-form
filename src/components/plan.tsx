@@ -4,21 +4,21 @@ export const Plan=()=>{
             <h1 className="text-marine-blue font-bold text-2xl">Select your plan</h1>
             <p className="text-cool-gray text-sm mb-7">You have the option of monthly or yearly billing.</p>
             <div className=" grid grid-cols-3 gap-x-3">
-                <div className="transition-border duration-300 border border-cool-gray hover:border-marine-blue rounded-md p-4 w-[120px]">
+                <div className="transition-border duration-300 border border-cool-gray hover:border-marine-blue rounded-md p-5 w-[120px]">
                     <div className="mb-8"><img src="./images/icon-arcade.svg" alt=""/></div>
                     <div className="grid">
                         <h4 className="text-marine-blue font-medium">Arcade</h4>
                         <span className="text-cool-gray text-xs">$9/mo</span>
                     </div>
                 </div>
-                <div className="transition-border duration-300 border border-cool-gray hover:border-marine-blue rounded-md p-4 w-[120px]">
+                <div className="transition-border duration-300 border border-cool-gray hover:border-marine-blue rounded-md p-5 w-[120px]">
                     <div className="mb-8"><img src="./images/icon-advanced.svg" alt=""/></div>
                     <div className="grid">
                         <h4 className="text-marine-blue font-medium">Advanced</h4>
                         <span className="text-cool-gray text-xs">$12/mo</span>
                     </div>
                 </div>
-                <div className="transition-border duration-300 border border-cool-gray hover:border-marine-blue rounded-md p-4 w-[120px]">
+                <div className="transition-border duration-300 border border-cool-gray hover:border-marine-blue rounded-md p-5 w-[120px]">
                     <div className="mb-8"><img src="./images/icon-pro.svg" alt=""/></div>
                     <div className="grid">
                         <h4 className="text-marine-blue font-medium">Pro</h4>
