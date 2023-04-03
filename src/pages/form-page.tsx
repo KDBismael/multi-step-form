@@ -15,6 +15,8 @@ interface Context{
     timeFrame:string;
     handlePlanClick:(name:string)=>void;
     handleTimeFrameClick:()=>void;
+    addOnsPrices:number;
+    handleAddOnsPrices:(price:number,checked:boolean)=>void;
 }
 
 const formContext=createContext<Context>({
@@ -25,12 +27,15 @@ const formContext=createContext<Context>({
     timeFrame:time1,
     handlePlanClick:(name:string)=>{},
     handleTimeFrameClick:()=>{},
+    addOnsPrices:0,
+    handleAddOnsPrices:(price:number,checked:boolean)=>{},
 });
 
 export const FormPage=()=>{
     const [step,setStep]=useState<string>(step1);
     const [plan,setPlan]=useState<string>(plan1);
     const [timeFrame,setTimeFrame]=useState<string>(time1);
+    const [addOnsPrices,setAddOnsPrices]=useState<number>(0);
 
     const back=()=>{
         switch(step){
@@ -74,8 +79,15 @@ export const FormPage=()=>{
                 setTimeFrame(time1);
         }
     }
+    const handleAddOnsPrices=(price:number,checked:boolean)=>{
+        if(checked){
+            setAddOnsPrices(addOnsPrices+price);
+        }else{
+            setAddOnsPrices(addOnsPrices-price);
+        }
+    }
 
-    const value={step,back,next,plan,timeFrame,handlePlanClick,handleTimeFrameClick}
+    const value={step,back,next,plan,timeFrame,handlePlanClick,handleTimeFrameClick,addOnsPrices,handleAddOnsPrices}
 
     return(
         <formContext.Provider value={value}>
