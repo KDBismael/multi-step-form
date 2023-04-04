@@ -7,16 +7,36 @@ import { FormLayout } from "../layouts/form-layout";
 import {step1,step2,step3,step4,step5,plan1, time1, time2} from "../helpers/helpers";
 import { Confirm } from "../components/confirm";
 
+interface AddOnsT{
+    id:number,
+    title:string,
+    description:string,
+    montlyPrice:number,
+    yearlyPrice:number,
+}
+interface planT{
+    id: number;
+    name: string;
+    image: string;
+    monthlyPrice: number;
+    yearlyPrice: number;
+}
 interface Context{
     step:string;
     back:()=>void;
     next:()=>void;
     plan:string;
+    planPrices:number;
     timeFrame:string;
-    handlePlanClick:(name:string)=>void;
-    handleTimeFrameClick:()=>void;
+    handlePlanClick:(name:string,yearlyPrice:number,monthlyPrice:number)=>void;
+    handleTimeFrameClick:(plan:planT)=>void;
     addOnsPrices:number;
-    handleAddOnsPrices:(price:number,checked:boolean)=>void;
+    handleAddOnsPrices:(addOn:AddOnsT)=>void;
+    checked1:boolean;
+    checked2:boolean;
+    checked3:boolean;
+    addOnsList:AddOnsT[];
+    goToInitial:()=>void;
 }
 
 const formContext=createContext<Context>({
@@ -24,11 +44,17 @@ const formContext=createContext<Context>({
     back:()=>{},
     next:()=>{},
     plan:plan1,
+    planPrices:9,
     timeFrame:time1,
-    handlePlanClick:(name:string)=>{},
-    handleTimeFrameClick:()=>{},
+    handlePlanClick:(name:string,monthlyPrice:number,yearlyPrice:number)=>{},
+    handleTimeFrameClick:(plan:planT)=>{},
     addOnsPrices:0,
-    handleAddOnsPrices:(price:number,checked:boolean)=>{},
+    handleAddOnsPrices:(addOn:AddOnsT)=>{},
+    checked1:false,
+    checked2:false,
+    checked3:false,
+    addOnsList:[],
+    goToInitial:()=>{},
 });
 
 export const FormPage=()=>{
@@ -36,7 +62,15 @@ export const FormPage=()=>{
     const [plan,setPlan]=useState<string>(plan1);
     const [timeFrame,setTimeFrame]=useState<string>(time1);
     const [addOnsPrices,setAddOnsPrices]=useState<number>(0);
-
+    const [planPrices,setPlanPrices]=useState<number>(timeFrame===time1? 9:90);
+    const [addOnsList,setAddOnsList]=useState<AddOnsT[]>(Array);
+    const [checked1,setChecked1]=useState(false);
+    const [checked2,setChecked2]=useState(false);
+    const [checked3,setChecked3]=useState(false);
+    
+    const goToInitial=()=>{
+        setStep(step1);
+    }
     const back=()=>{
         switch(step){
             case step4:
@@ -63,31 +97,55 @@ export const FormPage=()=>{
                 return;
         }
     }
-    const handlePlanClick=(name:string) => {
+    const handlePlanClick=(name:string,yearlyPrice:number,monthlyPrice:number) => {
         setPlan(name);
+        if(timeFrame===time1){
+            setPlanPrices(monthlyPrice);
+        }else{
+            setPlanPrices(yearlyPrice);
+        }
         /**UseState reactivity rerender the dom that make easier to change the style based on that */
     };
-    const handleTimeFrameClick=()=>{
+    const handleTimeFrameClick=(plan:planT)=>{
         switch(timeFrame){
             case time1:
                 setTimeFrame(time2);
+                setPlanPrices(plan.yearlyPrice);
                 break;
             case (time2):
                 setTimeFrame(time1);
+                setPlanPrices(plan.monthlyPrice);
                 break;
             default:
                 setTimeFrame(time1);
+                setPlanPrices(plan.monthlyPrice);
         }
     }
-    const handleAddOnsPrices=(price:number,checked:boolean)=>{
-        if(checked){
-            setAddOnsPrices(addOnsPrices+price);
-        }else{
-            setAddOnsPrices(addOnsPrices-price);
+    const handleAddOnsPrices=(addOn:AddOnsT)=>{
+        let state=[checked1,checked2,checked3];
+        let setState=[setChecked1,setChecked2,setChecked3];
+        let addOnsDataList=[...addOnsList]
+        let price=timeFrame===time1?addOn.montlyPrice:addOn.yearlyPrice
+        for (let i = 0; i <state.length; i++) {
+            if(i===addOn.id){
+                setState[i](!state[i]);
+                if(!state[i]){
+                    setAddOnsPrices(addOnsPrices+price);
+                    addOnsDataList.push(addOn);
+                    setAddOnsList(addOnsDataList);
+                }else{
+                    setAddOnsPrices(addOnsPrices-price);
+                    addOnsDataList=addOnsDataList.filter( (item) => {
+                        return item.id!==addOn.id
+                    });
+                    console.log(addOnsDataList)
+                    setAddOnsList(addOnsDataList);
+                }
+            }
         }
     }
 
-    const value={step,back,next,plan,timeFrame,handlePlanClick,handleTimeFrameClick,addOnsPrices,handleAddOnsPrices}
+    const value={step,back,next,plan,timeFrame,handlePlanClick,handleTimeFrameClick,addOnsPrices,handleAddOnsPrices,planPrices,checked1,checked2,checked3,addOnsList,goToInitial}
 
     return(
         <formContext.Provider value={value}>
