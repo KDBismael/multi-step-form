@@ -1,6 +1,6 @@
 export const Confirm=()=>{
     return(
-        <div className="flex w-full h-full items-center">
+        <div className="flex w-full h-full items-center justify-center">
             <div className="">
                 <img className="mx-auto" src="./images/icon-thank-you.svg" alt="" />
                 <div className="text-center mt-10">

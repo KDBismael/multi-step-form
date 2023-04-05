@@ -1,6 +1,6 @@
 import { Step } from "./step";
 import { useFormContext } from "../pages/form-page";
-import { step1,step2,step3,step4 } from "../helpers/helpers";
+import { step1,step2,step3,step4,step5 } from "../helpers/helpers";
 import { useEffect, useState } from "react";
 
 export const Navigation=()=>{
@@ -35,12 +35,15 @@ export const Navigation=()=>{
             case step4:
                 setActiveNmber(4);
                 break;
+            case step5:
+                setActiveNmber(4);
+                break;
             default:
                 setActiveNmber(1);
         }
     },[step])
     return(
-        <div className="navigation bg-sidebar m-3 rounded-lg p-8">
+        <div className="navigation h-48 flex items-start w-full justify-center gap-x-5 bg-sidebar lg:w-auto lg:h-auto lg:block lg:m-3 rounded-none lg:rounded-lg pt-5 lg:p-8">
             {steps.map(value =>(<Step active={activeNmber} key={value.id} step={step} content={value}/>))}
         </div>
     )

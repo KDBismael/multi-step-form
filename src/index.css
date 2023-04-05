@@ -10,8 +10,13 @@
 }
 
 .bg-sidebar{
-  background-image: url('../public/images/bg-sidebar-desktop.svg');
+  background-image: url('../public/images/bg-sidebar-mobile.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+@media(min-width:1024px){
+  .bg-sidebar{
+    background-image: url('../public/images/bg-sidebar-desktop.svg');
+  }
 }

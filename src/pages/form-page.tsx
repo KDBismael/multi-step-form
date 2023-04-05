@@ -84,6 +84,9 @@ export const FormPage=()=>{
         }
     }
     const next=()=>{
+        const buttons=document.querySelector('.buttons')as HTMLElement;/**
+            Add this here due to bugs when going to the last step (the thanks you step).
+         */
         switch(step){
             case step1:
                 return setStep(step2);
@@ -92,6 +95,7 @@ export const FormPage=()=>{
             case step3:
                 return setStep(step4);
             case step4:
+                buttons.style.display='none';//here is we hide it before rendering the last step.
                 return setStep(step5);
             default:
                 return;
@@ -149,7 +153,7 @@ export const FormPage=()=>{
 
     return(
         <formContext.Provider value={value}>
-            <div className="w-full h-full bg-magnolia grid place-content-center">
+            <div className="w-full h-full bg-magnolia grid lg:place-content-center overflow-x-hidden">
                 <FormLayout>
                     {step===step1? <Info/>:step===step2?<Plan/>:step===step3?<AddOns/>:step===step4?<Summary/>:step===step5?<Confirm/>:''}
                 </FormLayout>

@@ -33,7 +33,7 @@ export const Plan=()=>{
         <div>
             <h1 className="text-marine-blue font-bold text-2xl">Select your plan</h1>
             <p className="text-cool-gray text-sm mb-7">You have the option of monthly or yearly billing.</p>
-            <div className=" grid grid-cols-3 gap-x-3">
+            <div className=" grid lg:grid-cols-3 lg:gap-x-3 gap-y-3">
                 {plansTypeData.map(plan =>(<PlanType key={plan.id} data={plan}/>))}
             </div>
             <div className="p-2 bg-alabaster mt-8 text-center rounded-md flex justify-center">
