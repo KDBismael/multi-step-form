@@ -1,6 +1,6 @@
 import { Step } from "./step";
 import { useFormContext } from "../pages/form-page";
-import { step1,step2,step3,step4,step5 } from "../helpers/helpers";
+import { step2,step3,step4,step5 } from "../helpers/helpers";
 import { useEffect, useState } from "react";
 
 export const Navigation=()=>{

@@ -6,6 +6,7 @@ import { Summary } from "../components/summary";
 import { FormLayout } from "../layouts/form-layout";
 import {step1,step2,step3,step4,step5,plan1, time1, time2} from "../helpers/helpers";
 import { Confirm } from "../components/confirm";
+import { ValidationError } from "joi";
 
 interface AddOnsT{
     id:number,
@@ -35,8 +36,11 @@ interface Context{
     checked1:boolean;
     checked2:boolean;
     checked3:boolean;
+    validForm:boolean,
+    inputValidationError:ValidationError,
     addOnsList:AddOnsT[];
     goToInitial:()=>void;
+    emitInputError:(data:ValidationError)=>void;
 }
 
 const formContext=createContext<Context>({
@@ -53,8 +57,11 @@ const formContext=createContext<Context>({
     checked1:false,
     checked2:false,
     checked3:false,
+    validForm:false,
+    inputValidationError:new ValidationError('',[],{}),
     addOnsList:[],
     goToInitial:()=>{},
+    emitInputError:(data:ValidationError)=>{},
 });
 
 export const FormPage=()=>{
@@ -67,7 +74,12 @@ export const FormPage=()=>{
     const [checked1,setChecked1]=useState(false);
     const [checked2,setChecked2]=useState(false);
     const [checked3,setChecked3]=useState(false);
+    const [validForm,setValidForm]=useState(false);
+    const [inputValidationError,setInputValidationError]=useState<ValidationError>(new ValidationError('',[],{}));
     
+    const emitInputError=(data:ValidationError)=>{
+        setInputValidationError(data);
+    }
     const goToInitial=()=>{
         setStep(step1);
     }
@@ -89,7 +101,9 @@ export const FormPage=()=>{
          */
         switch(step){
             case step1:
-                return setStep(step2);
+                if(validForm) return setStep(step2);
+                // setInputValidationError()
+                break;
             case step2:
                 return setStep(step3);
             case step3:
@@ -149,7 +163,7 @@ export const FormPage=()=>{
         }
     }
 
-    const value={step,back,next,plan,timeFrame,handlePlanClick,handleTimeFrameClick,addOnsPrices,handleAddOnsPrices,planPrices,checked1,checked2,checked3,addOnsList,goToInitial}
+    const value={step,back,next,plan,timeFrame,handlePlanClick,handleTimeFrameClick,addOnsPrices,handleAddOnsPrices,planPrices,checked1,checked2,checked3,addOnsList,goToInitial,validForm,inputValidationError,emitInputError}
 
     return(
         <formContext.Provider value={value}>
