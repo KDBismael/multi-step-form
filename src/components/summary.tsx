@@ -20,15 +20,11 @@ export const Summary=()=>{
                     </div>
                     <div className="pt-4 flex flex-col gap-y-3">
                         {addOnsList.map(data=>(
-                            <div className="flex justify-between">
+                            <div key={data.id} className="flex justify-between">
                                 <span className="text-cool-gray text-xs">{data.title}</span>
                                 <span className="text-marine-blue text-xs font-medium">+${timeFrame===time1?data.montlyPrice:data.yearlyPrice}/mo</span>
                             </div>
                         ))}
-                        {/* <div className="flex justify-between">
-                            <span className="text-cool-gray text-xs">Larger storage</span>
-                            <span className="text-marine-blue text-xs font-medium">+$2/mo</span>
-                        </div> */}
                     </div>
                 </div>
                 <div className="pt-5 flex justify-between items-center px-5">

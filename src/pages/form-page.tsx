@@ -8,6 +8,11 @@ import {step1,step2,step3,step4,step5,plan1, time1, time2} from "../helpers/help
 import { Confirm } from "../components/confirm";
 import { ValidationError } from "joi";
 
+interface fieldsValue{
+    name: string;
+    email:string;
+    phone:string;
+}
 interface AddOnsT{
     id:number,
     title:string,
@@ -40,7 +45,9 @@ interface Context{
     inputValidationError:ValidationError,
     addOnsList:AddOnsT[];
     goToInitial:()=>void;
+    fieldsValue:fieldsValue;
     emitInputError:(data:ValidationError)=>void;
+    setFieldsData:(data:{})=>void;
 }
 
 const formContext=createContext<Context>({
@@ -61,7 +68,9 @@ const formContext=createContext<Context>({
     inputValidationError:new ValidationError('',[],{}),
     addOnsList:[],
     goToInitial:()=>{},
+    fieldsValue:{name:'',email:'',phone:''},
     emitInputError:(data:ValidationError)=>{},
+    setFieldsData:(data:{})=>{},
 });
 
 export const FormPage=()=>{
@@ -76,9 +85,29 @@ export const FormPage=()=>{
     const [checked3,setChecked3]=useState(false);
     const [validForm,setValidForm]=useState(false);
     const [inputValidationError,setInputValidationError]=useState<ValidationError>(new ValidationError('',[],{}));
+    const [fieldsValidation,setFieldsValidation]=useState<string[]>([])
+    const [fieldsValue,setFieldsValue]=useState<fieldsValue>({name:'',email:'',phone:''})
     
+    const setFieldsData=(data:{})=>{
+        let _data={...fieldsValue,...data}
+        setFieldsValue(_data);
+    }
     const emitInputError=(data:ValidationError)=>{
-        setInputValidationError(data);
+        let res=[...fieldsValidation]
+        if(!data.message) {
+            if(!res.includes(data._original?.isValid))res.push(data._original?.isValid)
+            setFieldsValidation([...res]);
+        }
+        else {
+            res=res.filter((x)=>x!==data.details[0].path[0]);
+            setFieldsValidation([...res]);
+            setInputValidationError(data);
+        }
+        if(res.length===3){
+            setValidForm(true)
+            setInputValidationError(new ValidationError('',[],{}))//make sure all reds are desappeared
+        }
+        else setValidForm(false);
     }
     const goToInitial=()=>{
         setStep(step1);
@@ -163,7 +192,7 @@ export const FormPage=()=>{
         }
     }
 
-    const value={step,back,next,plan,timeFrame,handlePlanClick,handleTimeFrameClick,addOnsPrices,handleAddOnsPrices,planPrices,checked1,checked2,checked3,addOnsList,goToInitial,validForm,inputValidationError,emitInputError}
+    const value={step,back,next,plan,timeFrame,handlePlanClick,handleTimeFrameClick,addOnsPrices,handleAddOnsPrices,planPrices,checked1,checked2,checked3,addOnsList,goToInitial,validForm,inputValidationError,emitInputError,fieldsValue,setFieldsData}
 
     return(
         <formContext.Provider value={value}>
